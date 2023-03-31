@@ -26,17 +26,20 @@ export function Form() {
     }
   };
   const contacts = useSelector(getContacts);
+
   const onFormSubmmit = evt => {
     evt.preventDefault();
+
+    if (contacts.find(contact => contact.name === name)) {
+      alert(`${name} is already in contacts`);
+      return;
+    }
+
     const newContact = {
       id: nanoid(),
       name,
       number,
     };
-    if (contacts.find(contact => contact.name === newContact.name)) {
-      alert(`${newContact.name} is already in contacts`);
-      return;
-    }
     dispatch(addContact(newContact));
 
     reset();
